@@ -2,3 +2,11 @@
 
 # Build script
 build.sh
+
+# Latex related
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.log
+*.out
