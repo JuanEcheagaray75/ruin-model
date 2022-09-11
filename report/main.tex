@@ -35,25 +35,26 @@ Dr. Jaime Eduardo Martínez Sánchez}
     \pagestyle{empty}
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \begin{abstract}
-       
+       Una empresa aseguradora ha solicitado que alumnos del Tecnológico de Monterrey estimen la probabilidad de ruina de su empresa a horizontes de tiempo finito e infinito. Con la base de datos recibida se realizaron análisis estadísticos para aplicar el modelo de \emph{Cramér-Lundberg} para la estimación de la probabilidad de ruina. Se calculó dicha probabilidad mediante simulación Monte Carlo y por la fórmula de \emph{Pollaczek-Khinchine}.
     \end{abstract}
     
     \begin{IEEEkeywords} 
-        Probabilidad de Ruina, Pollaczcek-Kinchine, Monte Carlo
+        Probabilidad de Ruina, Pollaczek-Khinchine, Monte Carlo
     \end{IEEEkeywords}
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \section{Introducción}
+    \section{Introducción} \label{sec:introduction}
     
         El riesgo se define como la posibilidad de perder algo o de tener un resultado no deseado, negativo o peligroso. Este se divide en dos componentes: la probabilidad de que un resultado negativo suceda, y el tamaño de dicho resultado; por lo que tenemos que mientras mayor sea la probabilidad y la pérdida potencial, mayor será el riesgo que se presente \cite{risk-definition}.
         
         El análisis de riesgo financiero evalúa dicha probabilidad y mediante su estimación, se combina la ocurrencia del riesgo y las posibles perdidas. Con esto buscamos investigar la probabilidad de ruina de una empresa de seguros realizando un modelo que simule distintas réplicas de la problemática.
 
-        Este escrito se organiza de la siguiente manera:
+        Este escrito se organiza de la siguiente manera: en las secciones \ref{sec:problem-description} y \ref{sec:research-questions} se presenta la problemática a resolver y se plantean las preguntas de investigación que dirigirán nuestro análisis. En la sección \ref{sec:theoretical-framework} se presentan algunos conceptos teóricos de Teoría de Riesgo necesarios para comprender la relevancia de nuestro proyecto.
+
+        En las secciones \ref{sec:method} y \ref{sec:proposed-method} se presenta la metodología seguida así como los análisis estadísticos necesarios para el cálculo de la probabilidad de ruina; después presentamos los resultados de nuestras estimaciones en la sección \ref{sec:results} para después discutir las áreas de oportunidad encontradas en la sección \ref{sec:discussion}. Finalmente presentamos las conclusiones de nuestro estudio en la sección \ref{sec:conclusions}.
+
+        En las secciones \ref{sec:resources} y \ref{sec:source-code} se presentan datos técnicos del equipo utilizado y se proporciona una liga al código fuente implementado.
         
-        % Aquí tenemos que poner al final una descripción de la organización del reporte, tipo, en sección N discutimos tal, en las secciones J, K presentamos ...
-        % Igual estaría chido mencionar el paper de Ekaterina en esta sección creo
-        
-    \section{Descripción de la problemática}
+    \section{Descripción de la problemática} \label{sec:problem-description}
     
         El reto se enfoca en el análisis del riesgo financiero concentrándose concretamente en las pérdidas económicas que surgen del pago que debe de hacer la compañía ante el caso de un siniestro, si el monto total de pagos exceden el capital que tiene disponible la compañía se producirá su ruina y provocará que salga del mercado. 
     
@@ -82,7 +83,7 @@ Dr. Jaime Eduardo Martínez Sánchez}
 
             Un desglose algebraico de la ecuación \ref{eqn:iterative-cramer} es suficiente para ver que es equivalente a la ecuación \ref{eqn:classical-cramer} del modelo original.
             
-    \section{Preguntas de investigación}
+    \section{Preguntas de investigación} \label{sec:research-questions}
 
         Mediante el análisis de la base de datos que nos ha proporcionado el Socio Formador, nos planteamos 2 preguntas con el fin de guiar nuestro estudio:
     
@@ -101,7 +102,7 @@ Dr. Jaime Eduardo Martínez Sánchez}
         
         Con $\lambda$ siendo el parámetro de poisson, $c$ la prima de tasa de unidad de tiempo, y $M_x(r)$ es la función generadora de momentos para el indicador de reclamos en cierto punto, con esto es posible derivar el límite superior e inferior para $R$ y así generalizar el modelo para incluir el impacto del reaseguro en caso de ruina.
 
-    \section{Marco teórico}
+    \section{Marco teórico} \label{sec:theoretical-framework}
 
         Cada que se tome una decisión se debe valorar la relación costos-beneficios, de lo contrario no estaríamos evaluando los riesgos que se corren al tomar dicha decisión y las ventajas o desventajas que esta nos traería \cite{risk-definition}.
             
@@ -119,21 +120,21 @@ Dr. Jaime Eduardo Martínez Sánchez}
             \item Disminución de los gastos de emisión, reduciendo gastos como comisiones y exámenes médicos, así también las pólizas que se cancelan.
         \end{itemize}
         
-        Durante el proyecto se hará uso del modelo de Cramér-Lundberg para la definición del modelo clásico de riesgo, como lo veremos descrito posteriormente \ref{cap:CL}.
+        Durante el proyecto se hará uso del modelo de Cramér-Lundberg para la definición del modelo clásico de riesgo, como lo hemos descrito anteriormente \ref{cap:CL}.
         
-    \section{Metodología}
+    \section{Metodología} \label{sec:method}
 
         Se realizará una limpieza de la base de datos proporcionada por el Socio Formador; se comprobará la independencia de los montos de los siniestros y la cantidad de siniestros por día mediante una prueba de correlación, después se determinarán las distribuciones que modelan la frecuencia de ocurrencia de los siniestros así como los montos pagados por la aseguradora por cada uno de ellos mediante pruebas de bondad de ajuste; se procederá después a estimar los parámetros de dichas distribuciones con las pruebas de hipótesis correspondientes, se brindarán también intervalos de confianza para cada parámetro estimado.
 
-        Con los parámetros estimados con anterioridad se determinará primero una expresión para la prima $c$ que garantice una probabilidad de ruina diferente a 1. Con estos parámetros se realizará una simulación de la probabilidad de ruina de la aseguradora a un horizonte finito $T$. Finalmente se calculará la probabilidad de ruina a un horizonte de tiempo infinito mediante la fórmula de Pollaczeck-Kinchine \cite{josafat-santana-2020}.
+        Con los parámetros estimados con anterioridad se determinará primero una expresión para la prima $c$ que garantice una probabilidad de ruina diferente a 1. Con estos parámetros se realizará una simulación de la probabilidad de ruina de la aseguradora a un horizonte finito $T$. Finalmente se calculará la probabilidad de ruina a un horizonte de tiempo infinito mediante la fórmula de \emph{Pollaczeck-Kinchine} \cite{josafat-santana-2020}.
     
-    \section{Propuesta metodológica}
+    \section{Propuesta metodológica} \label{sec:proposed-method}
 
         Para la solución de esta problemática hemos usado el lenguaje de programación \texttt{Python} en su versión 3.10.4; para los procesos de lectura, limpieza, exploración y agregación de datos hemos usado la librería \texttt{pandas} \cite{pandas} en conjunto con \texttt{matplotlib} \cite{matplotlib} y \texttt{seaborn} \cite{seaborn}, para las pruebas de hipótesis correspondientes así como para la generación de números aleatorios de acuerdo a las distribuciones encontradas se utilizó el módulo \texttt{stats} de la librería \texttt{scipy} \cite{scipy} y la librería \texttt{statsmodels} \cite{seabold2010statsmodels}. Una liga al código fuente desarrollado se encuentra en el apéndice.
 
         \subsection{Limpieza de la base de datos}
 
-            Se recibió una base de datos de una empresa aseguradora de coches con formato \texttt{csv}, en esta se incluyen los diferentes siniestros ocurridos en determinado tiempo. Se tienen la fecha del mismo, el tipo de auto, el modelo, el monto del siniestro, si se aplica la cobertura, la cantidad del deducible, si el cliente aplicó el seguro y si el siniestro representó una pérdida total.
+            Se recibió una base de datos de una empresa aseguradora de coches en formato \texttt{csv}, en esta se incluyen los diferentes siniestros ocurridos en determinado tiempo. Se tienen la fecha del mismo, el tipo de auto, el modelo, el monto del siniestro, si se aplica la cobertura, la cantidad del deducible, si el cliente aplicó el seguro y si el siniestro representó una pérdida total.
         
             Se aplicó un proceso de limpieza de datos en la que se removieron todos los siniestros en los que no se aplicó el seguro con el fin de tener solamente los datos que sí generaron una pérdida económica para la empresa aseguradora.
 
@@ -148,7 +149,7 @@ Dr. Jaime Eduardo Martínez Sánchez}
                 El primer paso en nuestro estudio será verificar que exista independencia entre el monto de los reclamos y el número de reclamos por día; la modelación que seguimos originalmente propuesta por la Dra. Ekaterina en \cite{ekaterina} asume que existe independencia entre estas 2 variables, en caso contrario, no podremos utilizar el modelo de \emph{Cramér-Lundberg}. Como un primer heurístico, podemos visualizar estas 2 variables en el diagrama de dispersión que presentamos en la figura \ref{img:scatter-independence}.
                 \begin{figure}[!htbp]
                     \centering
-                    \includegraphics[scale=0.4]{img/independent.png}
+                    \includegraphics[scale=0.45]{img/independent.png}
                     \caption{Diagrama de dispersión del monto de los siniestros contra la cantidad de reclamos por día}
                     \label{img:scatter-independence}
                 \end{figure}
@@ -167,7 +168,7 @@ Dr. Jaime Eduardo Martínez Sánchez}
             
                 \begin{figure}[!htbp]
                     \centering
-                    \includegraphics[scale=0.42]{img/claims_per_day.png}
+                    \includegraphics[scale=0.45]{img/claims_per_day.png}
                     \caption{Distribución de la frecuencia de reclamos por día}
                     \label{img:claims_per_day}
                 \end{figure}
@@ -185,7 +186,7 @@ Dr. Jaime Eduardo Martínez Sánchez}
                 Para el caso de la distribución del monto de los reclamos haremos la prueba de \textit{Anderson-Darling}\cite{evans2008distribution} y aplicaremos la prueba de \emph{Lilliefors} \cite{lilliefors1969kolmogorov} para la distribución exponencial. Hemos decidido realizar 2 pruebas de bondad de ajuste dado que uno de los supuestos más fuertes de nuestro modelado es que la distribución del monto de los reclamos es de cola ligera; el que la cola sea pesada dificultará enormemente la determinación de la fórmula analítica de la probabilidad de ruina a un horizonte infinito. Se muestra una visualización de la distribución de los montos en la figura \ref{img:amount-dist}.
                 \begin{figure}[!htbp]
                     \centering
-                    \includegraphics[scale=0.42]{img/amount_dist.png}
+                    \includegraphics[scale=0.45]{img/amount_dist.png}
                     \caption{Distribución del monto de los reclamos}
                     \label{img:amount-dist}
                 \end{figure}
@@ -196,9 +197,9 @@ Dr. Jaime Eduardo Martínez Sánchez}
                     H_1 : Z \not \sim \text{Exp}(\mu)
                 \end{gather*}
                 
-                El \textit{p-value} obtenido para la prueba de \emph{Lilliefors} fue de $0.09746$, y para la \textit{chi-square} fue $0.109$; ambas pruebas indican que no se puede rechazar la hipótesis nula, el modelado de esta variable aleatoria para nuestro caso de estudio será el de una distribución exponencial.
+                El \textit{p-value} obtenido para la prueba de \emph{Lilliefors} fue de $0.09746$, y para la \textit{Anderson-Darling} fue $0.109$; ambas pruebas indican que no se puede rechazar la hipótesis nula, el modelado de esta variable aleatoria para nuestro caso de estudio será el de una distribución exponencial.
             
-            \subsubsection{Discriminación de parámetros}
+            \subsubsection{Discriminación de parámetros} \label{sec:parameter-estimation}
                     
                 Ya que conocemos las distribuciones que modelan los fenómenos de interés, nos queda solamente estimar los parámetros de dichas distribuciones; como ambos son en este caso las medias poblacionales de cada variable, realizaremos 2 pruebas de hipótesis sobre la media poblacional, con un nivel de significancia $\alpha = 0.05$ para ambos casos.
                 \begin{gather*}
@@ -215,7 +216,7 @@ Dr. Jaime Eduardo Martínez Sánchez}
                 El intervalo de confianza al $95\%$ de estos dos parámetros se puede calcular mediante la distribución normal (debido a que no se conoce la varianza poblacional de estos 2 parámetros). Los intervalos que hemos obtenido son:
                 \begin{gather*}
                     \text{CI}_{\lambda} = \left(73.439, 75.169\right)\\
-                    \text{CI}_{\mu} = \left(30399.680, 31143.071\right)
+                    \text{CI}_{\mu} = \left(30,399.680, 31,143.071\right)
                 \end{gather*}
 
                 Por lo que cualquier $\lambda$ y $\mu$ dentro de estos intervalos darán un nivel de significancia del 5\% al modelo utilizar.
@@ -242,11 +243,11 @@ Dr. Jaime Eduardo Martínez Sánchez}
 
             Para dicha aproximación se calculará a su vez un intervalo de confianza al $95\%$ para después calcular su margen de error $ME$. El Socio Formador nos ha solicitado que dicho margen de error sea estrictamente menor a $0.05$. En caso de que el margen de error calculado sea mayor al estipulado, se incrementará el número de simulaciones $N$ hasta que satisfagamos las necesidades de la empresa aseguradora.
 
-        \subsection{Cálculo de la probabilidad de ruina con fórmula de Pollaczcek-Kinchine} \label{sec:pollaczcek}
+        \subsection{Cálculo de la probabilidad de ruina con fórmula de Pollaczek-Khinchine} \label{sec:pollaczek}
 
             Finalizaremos nuestro caso de estudio al obtener una expresión analítica para la probabilidad de ruina a un horizonte de tiempo infinito empleando la fórmula de \emph{Pollaczcek-Kinchine} \cite{josafat-santana-2020}; para su desarrollo supondremos que la frecuencia de los reclamos sigue un proceso de Poisson homogéneo de intensidad $\lambda$, y que la distribución que sigue el monto de los reclamos es una exponencial con parámetro $\mu$.
 
-            La fórmula de \emph{Pollaczek-Khinchin} es un resultado obtenido al analizar el monto de superávit que generaría la empresa aseguradora \cite{burnecki2005best}, es decir:
+            La fórmula de \emph{Pollaczek-Khinchine} es un resultado obtenido al analizar el monto de superávit que generaría la empresa aseguradora \cite{burnecki2005best}, es decir:
             \begin{eqnarray*}
                 Y(t) &=& u - U(t) = u-(u+ct-\sum_{k=1}^{N(t)} {Z_k}) \\
                 &=& \sum_{k=1}^{N(t)} {Z_k} - ct
@@ -274,7 +275,7 @@ Dr. Jaime Eduardo Martínez Sánchez}
                 M = \sum_{k=0}^K Y_k \geq u
             \end{equation}
 
-            La cual conlleva a la fórmula de \emph{Pollaczek-Khinchin}:
+            La cual conlleva a la fórmula de \emph{Pollaczek-Khinchine}:
             \begin{equation}
                 \psi (u) = P(M>u) = \frac{\theta}{1+\theta} \sum_{n=0}^\infty \left (\frac{1}{1+\theta}\right)^n \bar{B}_0^{*n}(u)
             \end{equation}
@@ -295,11 +296,11 @@ Dr. Jaime Eduardo Martínez Sánchez}
                 \psi(u) = \frac{1}{1+\theta} \cdot \exp\left(-\frac{u \theta}{(1+\theta)\mu}\right)
             \end{equation}
 
-    \section{Experimentación y resultados}
+    \section{Experimentación y resultados} \label{sec:results}
 
         \subsection{Simulación de probabilidad de ruina por Monte Carlo Crudo} \label{sec:monte-carlo}
 
-            Respondiendo a la primera de nuestras preguntas de investigación, se realizará una simulación de la probabilidad de ruina mediante Monte Carlo Crudo. Nos enfocaremos en estimar la probabilidad de ruina para un horizonte de tiempo $T$ de 5,000 días, y se realizarán 10,000 simulaciones $(N)$. Para esta simulación se usaron los parámetros $\lambda$ y $\mu$ estimados con anterioridad, se supuso que la empresa aseguradora comenzó sus operaciones con un capital inicial $U_0 = 1,000,000$, y asignamos un factor de recargo $\theta = 0.05$, que resultó en una prima $c = 2,400,761.65$. Presentamos una visualización de las trayectorias simuladas en la figura \ref{fig:case-study-paths}.
+            Respondiendo a la primera de nuestras preguntas de investigación, se realizará una simulación de la probabilidad de ruina mediante Monte Carlo Crudo. Nos enfocaremos en estimar la probabilidad de ruina para un horizonte de tiempo $T$ de 5,000 días, y se realizarán 10,000 simulaciones $(N)$. Para esta simulación se usaron los parámetros $\lambda$ y $\mu$ estimados en la sección \ref{sec:parameter-estimation}, se supuso que la empresa aseguradora comenzó sus operaciones con un capital inicial $U_0 = 1,000,000$, y asignamos un factor de recargo $\theta = 0.05$, que resultó en una prima $c = 2,400,761.65$. Presentamos una visualización de las trayectorias simuladas en la figura \ref{fig:case-study-paths}.
             \begin{figure}[!htbp]
                 \centering
                 \includegraphics[scale=0.45]{img/ruin_sim_U01000000_T5000_Theta0.05_N10000.png}
@@ -309,25 +310,44 @@ Dr. Jaime Eduardo Martínez Sánchez}
             
             Para esta simulación hemos estimado una probabilidad de ruina $\bar{\psi}_{5000}(U_0) = 0.1503$. Hemos calculado también un intervalo de confianza al $95\%$ para esta proporción aprovechando el Teorema Central del Límite, obtuvimos un intervalo de confianza ${CI}_{\bar{\psi}} = \left(0.1433, 0.1573\right)$; el margen de error del intervalo de confianza fue $ME = 0.007$, que es menor al margen de error solicitado por el Socio Formador.
 
-        \subsection{Cálculo de la probabilidad de ruina con la fórmula de Pollaczcek-Kinchine}
+        \subsection{Cálculo de la probabilidad de ruina con la fórmula de Pollaczek-Khinchine} \label{sec:analytic-sol}
 
-            Para resolver nuestra segunda interrogante, calcularemos la probabilidad de ruina para la empresa aseguradora para un tiempo infinito utilizaremos la ecuación \ref{eqn:pollaczeck-prob} que definimos en la sección \ref{sec:pollaczcek}. Utilizaremos como capital inicial $u$ \$$1,000,000$, el factor de recargo $\theta$ se mantendrá en $0.05$ y el parámetro de la distribución exponencial del monto de los reclamos $\mu$ será el estimado en la sección .
+            Para resolver nuestra segunda interrogante, calcularemos la probabilidad de ruina para la empresa aseguradora para un tiempo infinito utilizaremos la ecuación \ref{eqn:pollaczeck-prob} que definimos en la sección \ref{sec:pollaczek}. Utilizaremos como capital inicial $u$ \$$1,000,000$, el factor de recargo $\theta$ se mantendrá en $0.05$ y el parámetro de la distribución exponencial del monto de los reclamos $\mu$ será el estimado en la sección \ref{sec:parameter-estimation}.
             
             Sustituyendo estos datos en la ecuación \ref{eqn:pollaczeck-prob} encontramos que la probabilidad de ruina a un horizonte infinito es $\psi(u) = 0.202$. Notamos que este valor difiere del que estimamos en la sección \ref{sec:monte-carlo}.
 
-    \section{Discusión de resultados}
+    \section{Discusión de resultados} \label{sec:discussion}
 
-    \section{Recursos utilizados}
+        A pesar de que el presente escrito ha cumplido con todas las especificaciones solicitadas por el Socio Formador, hemos encontrado algunas áreas de oportunidad que de ser resueltas añadirían aún más valor a nuestra investigación.
+
+        \subsection{Complejidad computacional}
+
+            El método de Monte Carlo Crudo que hemos usado en este trabajo se vuelve computacionalmente ineficiente cuando se quieren estimar probabilidades a horizontes de tiempo cada vez más grandes, su complejidad computacional de tiempo en el peor de los casos posibles es de orden $O(NT)$, para las especificaciones de nuestra investigación, nuestro algoritmo requeriría como máximo un total de $50,000,000$ de operaciones, tarea que se vuelve en extremo lenta cuando se usan lenguajes de programación dinámicos como lo es Python.
+
+            Creemos que el uso de un lenguaje de programación más eficiente en conjunto con la implementación de un método de reducción de varianza, ayudarían a reducir la complejidad computacional de nuestras simulaciones a la vez que nos facilitan la estimación de probabilidades a horizontes de tiempo cada vez más grandes.
+
+        \subsection{Diferencia entre probabilidad frecuentista y analítica}
+            
+            Como hemos observado en la sección \ref{sec:analytic-sol}, la probabilidad de ruina frecuentista que hemos obtenido mediante el proceso de simulación difiere de la calculada con la fórmula de \emph{Pollaczek-Khinchine} que hemos derivado para nuestro caso de estudio. Conjeturamos que este fenómeno ocurre ya que un horizonte de tiempo $T$ de 5,000 días no es lo suficientemente grande como para acercarse a la probabilidad analítica de que haya ruina en un horizonte infinito; sin embargo, para resolver este problema, se requeriría aumentar el horizonte $T$ y el número de simulaciones $N$ para garantizar un margen de error pequeño en nuestra estimación, lo que nos lleva de nuevo al área de oportunidad anterior.
+
+    \section{Recursos utilizados} \label{sec:resources}
 
         La implementación del código fuente fue corrida en una máquina de sistema operativo Ubuntu 22.04.1 LTS x86\_64. El equipo disponía de un procesador Intel(R) Core(TM) i5-1035G1 CPU @ 3.6GHz, y tenía disponible 8 GB de RAM. Especificaciones sobre las versiones de los paquetes usados en este proyecto pueden ser encontrados en la documentación de nuestro repositorio \ref{sec:source-code}.
         
-    \section{Conclusiones}
+    \section{Conclusiones} \label{sec:conclusions}
+        
+        El análisis de la probabilidad de ruina seguirá siendo una de las principales tareas de la Teoría de Riesgo, el buen análisis de los registros históricos de una empresa en conjunción con la implementación de algoritmos de simulación eficientes es imperativo para cualquier departamento de gestión de riesgos.
+
+        Dada la dificultad de encontrar fórmulas matemáticas cerradas para la probabilidad de ruina a horizontes de tiempo finitos, el uso de simulaciones como la que proponemos representa una buena alternativa para aquellas empresas que deseen entrar a este riesgoso mercado.
+
+        La metodología desarollada solamente se vería beneficiada de la implementación de un mejor método de simulación que no tenga una complejidad computacional tan alta; esto le daría el poder a las aseguradoras de estimar la probabilidad de ruina de su empresa a largo plazo con un alto grado de fiabilidad.
     
     \appendices
 
     \section{Código Fuente} \label{sec:source-code}
 
         El código implementado puede ser consultado en el siguiente repositorio \href{https://github.com/JuanEcheagaray75/ruin-model}{aquí}.
+
     \nocite{*}
     \bibliographystyle{IEEEtran}
     \bibliography{references.bib}
