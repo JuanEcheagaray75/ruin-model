@@ -10,3 +10,7 @@ build.sh
 *.dvi
 *.log
 *.out
+
+# Extra stuff
+*.html
+*.zip
